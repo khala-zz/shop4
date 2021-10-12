@@ -21,6 +21,7 @@ class CreateOrdersProductsTable extends Migration
             $table -> string('product_code',100);
             $table -> string('product_name',100);
             $table -> string('product_size',100);
+            
             $table -> float('product_price');
             $table -> integer('product_qty');
 
