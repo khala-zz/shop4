@@ -14,7 +14,7 @@ class AddColumnPriceBigintToProductsTable extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->bigInteger('price');
+            //$table->bigInteger('price');
             $table -> integer('pro_total_rating') -> default(1) -> comment('Tổng số đánh giá');
             $table -> integer('pro_total_number') -> default(1) -> comment('Tổng số đánh giá');
         });
