@@ -7,10 +7,10 @@ use App\Models\Newsletters;
 use Mail;
 use Carbon\Carbon;
 
-use App\Jobs\SendWelcomeEmail;
-use App\Jobs\CreateNewsletter;
+//use App\Jobs\SendWelcomeEmail;
+//use App\Jobs\CreateNewsletter;
 
-use App\Events\LoginHistory;
+//use App\Events\LoginHistory;
 
 class ContactController extends Controller {
 
@@ -45,12 +45,12 @@ class ContactController extends Controller {
             $message->to('dokhaclam@gmail.com', 'Admin')->subject($request->get('name'));
         });
         // su dung queue
-        $details=[
+        /*$details=[
                 "email"=>$request->email,
                 "name"=>$request->name,
                 "mobile"=>$request->mobile,
                 "user_query"=>$request -> message
-            ];
+            ];*/
             /*
         for($i=0;$i< 20;$i ++){
             $details['index'] = $i;
