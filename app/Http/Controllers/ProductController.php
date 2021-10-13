@@ -268,7 +268,7 @@ class ProductController extends Controller
 	//delete all product cart
 	public function deleteAllCartProduct(Request $request){
 
-		dd($request -> cart_id);
+		
 		$ids_string = implode($request -> cart_id,',');
 		
 		$ids = explode(',',$ids_string);
