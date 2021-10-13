@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\View;
 //su dung de quy
 use App\Components\Recusive;
 
+//su dung https duong dan
+use Illuminate\Routing\UrlGenerator;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -27,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(UrlGenerator $url)
     {
         Paginator::useBootstrap();
         Schema::defaultStringLength(191);
@@ -40,6 +43,10 @@ class AppServiceProvider extends ServiceProvider
         $htmlOption = $recusive -> categoryRecusiveFront($parentId = '');
         // share cho menu danh muc san pham
         View::share(['categories_share' => $categories, 'htmlOption' => $htmlOption]);
+
+        if (env('APP_ENV') !== 'local') {
+                    $url->forceScheme('https');
+              }
 
     }
 }
