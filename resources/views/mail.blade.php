@@ -8,6 +8,6 @@ Tên: {{ $name }} <br>
 Email: {{ $email }} <br>
 Điện thoại: {{ $mobile }} <br>
 Nội dung: {{ $user_query }} <br><br>
-Index: {{ $index }} <br><br>
+{{-- Index: {{ $index }} <br><br> --}}
 
 Cám ơn
