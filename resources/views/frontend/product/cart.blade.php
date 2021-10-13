@@ -144,7 +144,7 @@
                                         <!-- kiem tra neu có coupon thi hiện ra -->
                                         @if(!empty(Session::get('CouponAmount')))
 	                                        <div class="total-shipping">
-	                                            <h5>Giảm giá<span> <?php echo formatMoney(Session::get('CouponAmount')); ?></span></h5>
+	                                            <h5>Giảm giá <span> <?php echo formatMoney(Session::get('CouponAmount')); ?></span></h5>
 	                                            
 	                                        </div>
                                         	<h4 class="grand-totall-title">Tổng tiền thanh toán <span><?php echo formatMoney($total_amount - Session::get('CouponAmount')); ?></span></h4>
