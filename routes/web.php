@@ -79,6 +79,7 @@ Route::get('/cart/delete-product/{id}',[ProductController::class,'deleteCartProd
 //delete all product cart
 Route::get('/cart/delete-all-product',[ProductController::class,'deleteAllCartProduct']) -> name('delete.all.product');
 
+
 //update cart
 Route::get('/cart/update-quantity/{id}/{quantity}',[ProductController::class,'updateCartQuantity']);
 

@@ -112,7 +112,7 @@
                                             <!-- xoa toan bo product cart -->
                                             <div class="cart-clear">
                                                 
-                                                <a href="{{route('delete.all.product',['cart_id' => $cart_id])}}">Xóa giỏ hàng</a>
+                                                <a href="{{ route('delete.all.product',['cart_id' => $cart_id]) }}">Xóa giỏ hàng</a>
                                             </div>
                                         </div>
                                     </div>

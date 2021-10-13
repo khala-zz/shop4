@@ -268,16 +268,17 @@ class ProductController extends Controller
 	//delete all product cart
 	public function deleteAllCartProduct(Request $request){
 
+		//dd($request->input('cart_id', []));
+
+		//$ids_string = implode($request->input('cart_id', []),',');
 		
-		$ids_string = implode($request -> cart_id,',');
-		
-		$ids = explode(',',$ids_string);
+		//$ids = explode(',',$ids_string);
 		
 		//xóa sesion coupon cũ trước khi xóa product
 		Session::forget('CouponAmount');
 		Session::forget('CouponCode');
 
-		DB::table('cart') -> whereIn('id',$ids) -> delete();
+		DB::table('cart') -> whereIn('id',$request->input('cart_id', [])) -> delete();
 		return redirect('/cart') -> with('flash_message_success','Xóa sản phẩm thành công !');
 	}
 
