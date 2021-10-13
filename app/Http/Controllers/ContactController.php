@@ -35,7 +35,7 @@ class ContactController extends Controller {
         Contact::create($request->all());
 
         //  Send mail to admin
-        /*\Mail::send('mail', array(
+        \Mail::send('mail', array(
             'name' => $request->get('name'),
             'email' => $request->get('email'),
             'mobile' => $request->get('mobile'),
@@ -43,7 +43,7 @@ class ContactController extends Controller {
         ), function($message) use ($request){
             $message->from($request->email);
             $message->to('dokhaclam@gmail.com', 'Admin')->subject($request->get('name'));
-        });*/
+        });
         // su dung queue
         $details=[
                 "email"=>$request->email,
@@ -62,7 +62,7 @@ class ContactController extends Controller {
         $job2 = (new CreateNewsletter());
         dispatch($job2);*/
 
-        event(new LoginHistory($details));
+        //event(new LoginHistory($details));
 
 
         return back()->with('flash_message_success', 'Chúng tôi đã nhận được thông tin của bạn,chúng tôi sẽ liên hệ bạn trong thời gian sớm nhất,cám ơn.');
