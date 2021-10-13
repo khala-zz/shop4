@@ -495,7 +495,7 @@ class ProductController extends Controller
         //su dung notification
 
   		
-        $offerData = [
+        /*$offerData = [
             'name' => $userDetails -> name,
             'body' => 'Ban vua moi dat hang tren shop cua chung toi.Ma don hang '.$ma_order_id,
             'thanks' => 'cam on',
@@ -504,7 +504,7 @@ class ProductController extends Controller
             'data' => $ma_order_id
         ];
   
-        Notification::send($userDetails, new OffersNotification($offerData));
+        Notification::send($userDetails, new OffersNotification($offerData));*/
    
         
 
