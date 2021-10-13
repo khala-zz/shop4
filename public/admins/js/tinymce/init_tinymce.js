@@ -1,7 +1,8 @@
  $(function(){	
         //add tinymce
         let editor_config = {
-        	path_absolute : "http://localhost/shop3/public/",
+            //"{{ asset('admin/booking/available-rooms') }}/"+ _checkindate,
+        	path_absolute : "http://khala-shop3.herokuapp.com/",
         	selector: 'textarea.tinymce_editor_init',
         	relative_urls: false,
         	plugins: [
