@@ -45,16 +45,51 @@
                                 <div class="zoompro-wrap zoompro-2">
                                     <div class="zoompro-border zoompro-span">
                                     	<!-- get image dau tien trong gallery -->
-                                    	@php $productGalleryFirst = $product -> gallery -> first(); @endphp
-                                        <img class="zoompro" src="{{asset('uploads/'.$product->id.'/large/'.$productGalleryFirst -> image)}}" data-zoom-image="{{asset('uploads/'.$product->id.'/large/'.$productGalleryFirst -> image)}}" alt="{{$product -> title}}" />
+                                    	{{-- @php $productGalleryFirst = $product -> gallery -> first(); @endphp
+                                        <img class="zoompro" src="{{asset('uploads/'.$product->id.'/large/'.$productGalleryFirst -> image)}}" data-zoom-image="{{asset('uploads/'.$product->id.'/large/'.$productGalleryFirst -> image)}}" alt="{{$product -> title}}" /> --}}
+
+                                        @php 
+                                			//khai bao storage google
+								            $googleDriveStorage_large = Storage::disk('large_google_drive');
+								            $googleDriveStorage_small = Storage::disk('small_google_drive');
+								            //get lay image dau tien cho hieu ung gallery
+                                			$productGalleryFirst = $product -> gallery -> first();
+                                			
+								            //get lay file info tu google storage large
+					                        $fileinfo_large = collect($googleDriveStorage_large->listContents('/', false))
+					                            ->where('type', 'file')
+					                            ->where('name', $productGalleryFirst -> image)
+					                            ->first(); 
+                                			 //echo $googleDriveStorage_large -> url($fileinfo_large['path']);
+
+                                		@endphp
+                                		
+						          			
+						            			
+						            			<img class="zoompro" src="{{asset($googleDriveStorage_large -> url($fileinfo_large['path']))}}" data-zoom-image="{{asset($googleDriveStorage_large -> url($fileinfo_large['path']))}}" alt="{{$product -> title}}" />
+						          			
+					          			
                                     	
                                     </div>
                                 </div>
                                 <div id="gallery" class="product-dec-slider-2">
                                 	<!--galerry -->
                                 	@forelse($product -> gallery as $index => $imageGallery)
-	                                    <a class="{{$index == 0?'active':''}}" data-image="{{asset('uploads/'.$product->id.'/small/'.$imageGallery -> image)}}" data-zoom-image="{{asset('uploads/'.$product->id.'/large/'.$imageGallery -> image)}}">
-	                                        <img src="{{asset('uploads/'.$product->id.'/small/'.$imageGallery -> image)}}" alt="{{$imageGallery -> image}}" />
+                                		@php 
+					                        //get image small from gg storage
+					                        $fileinfo_small = collect($googleDriveStorage_small->listContents('/', false))
+					                            ->where('type', 'file')
+					                            ->where('name', $imageGallery -> image)
+					                            ->first(); 
+					                        //fileinfo large
+					                        $fileinfo_big = collect($googleDriveStorage_large->listContents('/', false))
+					                            ->where('type', 'file')
+					                            ->where('name', $imageGallery -> image)
+					                            ->first(); 
+				                    	@endphp
+				                    	
+	                                    <a class="{{$index == 0?'active':''}}" data-image="{{asset($googleDriveStorage_small -> url($fileinfo_small['path']))}}" data-zoom-image="{{asset($googleDriveStorage_large -> url($fileinfo_big['path']))}}">
+	                                        <img src="{{asset($googleDriveStorage_small -> url($fileinfo_small['path']))}}" alt="{{$imageGallery -> image}}" />
 	                                    </a>
                                     @empty
                                     	<p> Chưa có gallery </p>
