@@ -65,8 +65,9 @@
                                 		@endphp
                                 		
 						          			
-						            			
+						            			@if(!empty($fileinfo_large['path']))
 						            			<img class="zoompro" src="{{asset($googleDriveStorage_large -> url($fileinfo_large['path']))}}" data-zoom-image="{{asset($googleDriveStorage_large -> url($fileinfo_large['path']))}}" alt="{{$product -> title}}" />
+						            			@endif
 						          			
 					          			
                                     	
@@ -87,10 +88,11 @@
 					                            ->where('name', $imageGallery -> image)
 					                            ->first(); 
 				                    	@endphp
-				                    	
+				                    	@if(!empty($fileinfo_big['path']) && !empty($fileinfo_small['path']))
 	                                    <a class="{{$index == 0?'active':''}}" data-image="{{asset($googleDriveStorage_small -> url($fileinfo_small['path']))}}" data-zoom-image="{{asset($googleDriveStorage_large -> url($fileinfo_big['path']))}}">
 	                                        <img src="{{asset($googleDriveStorage_small -> url($fileinfo_small['path']))}}" alt="{{$imageGallery -> image}}" />
 	                                    </a>
+	                                    @endif
                                     @empty
                                     	<p> Chưa có gallery </p>
                                     @endforelse
