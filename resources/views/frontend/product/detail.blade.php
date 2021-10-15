@@ -55,11 +55,14 @@
 								            //get lay image dau tien cho hieu ung gallery
                                 			$productGalleryFirst = $product -> gallery -> first();
                                 			
+
+                                			
 								            //get lay file info tu google storage large
 					                        $fileinfo_large = collect($googleDriveStorage_large->listContents('/', false))
 					                            ->where('type', 'file')
 					                            ->where('name', $productGalleryFirst -> image)
 					                            ->first(); 
+
                                 			 //echo $googleDriveStorage_large -> url($fileinfo_large['path']);
 
                                 		@endphp
