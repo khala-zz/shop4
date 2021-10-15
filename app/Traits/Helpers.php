@@ -66,7 +66,7 @@ trait Helpers
     }
 
 
-    function resizeImage($imagePath, $savePath, $width, $height)
+    function resizeImage($imagePath, $savePath, $width, $height,$uploaded_file)
     {
         /*Image::make($imagePath)
             ->resize($width, $height, function ($constraint) {
