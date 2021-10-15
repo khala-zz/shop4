@@ -6,6 +6,10 @@ namespace App\Traits;
 
 use Intervention\Image\Facades\Image;
 
+use Illuminate\Support\Facades\Storage;
+
+use Illuminate\Support\Str;
+
 trait Helpers
 {
 
@@ -25,8 +29,10 @@ trait Helpers
     ];*/
     protected $imagesSizes = [
         
-        'large' => ['width' => 800, 'height' => 800],
-        'small' => ['width' => 360, 'height' => 360],
+        /*'large' => ['width' => 800, 'height' => 800],
+        'small' => ['width' => 360, 'height' => 360],*/
+        '1Q7gpPodh56tCp1cY4mJ35F-mL7mW5ozH' => ['width' => 800, 'height' => 800],
+        '19_X0lc8GknbdDeEJ1vDo4ve7N2uPEaXs' => ['width' => 360, 'height' => 360],
 
     ];
 
@@ -37,11 +43,19 @@ trait Helpers
 
         $destination = $destination ? $destination : base_path('public').'/uploads/';
 
+        //khai bao disk gg drive
+        $googleDriveStorage = Storage::disk('google_drive');
+
         if($request->hasfile($filename)) {
 
             foreach($request->file($filename) as $image) {
                 $ext = $image->getClientOriginalExtension();
                 $file_name = time().md5(rand(100,999)).'.'.$ext;
+
+                //luu len google drive
+                 //filePath = public_path('logo.png');
+                $fileData = \File::get($image);
+                $googleDriveStorage -> put($file_name, $fileData);
                 $image->move($destination, $file_name);
                 @chmod($destination . '/' . $file_name, 777);
                 $files_array[] = $file_name;
@@ -54,10 +68,34 @@ trait Helpers
 
     function resizeImage($imagePath, $savePath, $width, $height)
     {
-        Image::make($imagePath)
+        /*Image::make($imagePath)
             ->resize($width, $height, function ($constraint) {
                 $constraint->aspectRatio();
-            })->save($savePath);
+            })->save($savePath);*/
+        $googleDriveStorage_image = Storage::disk('google_drive');
+        //large    
+        if(Str::contains($savePath, '1Q7gpPodh56tCp1cY4mJ35F-mL7mW5ozH')){
+
+            $googleDriveStorage = Storage::disk('large_google_drive');
+           
+           
+            $url = $googleDriveStorage_image -> url($uploaded_file);
+
+            $resize = Image::make($url)
+            ->fit($width, $height)->encode('jpg');
+            
+            $googleDriveStorage -> put($uploaded_file, $resize);
+            
+        }
+
+        //small 
+        if(Str::contains($savePath, '19_X0lc8GknbdDeEJ1vDo4ve7N2uPEaXs')){
+            $googleDriveStorage = Storage::disk('small_google_drive');
+            $url = $googleDriveStorage_image -> url($uploaded_file);
+             $resize = Image::make($url)
+            ->fit($width, $height)->encode('jpg');
+            $googleDriveStorage -> put($uploaded_file, $resize);
+        }
     }
 
     function createProductUploadDirs($product_id , $imagesSizes)

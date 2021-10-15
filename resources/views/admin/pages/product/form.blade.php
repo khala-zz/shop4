@@ -185,15 +185,40 @@
 
       <input type="file" class="form-control" name="multi-image[]" multiple accept="image/*" id="gallery-photo-add"/>
       <!-- hien thi nhieu image -->
-      <div class="row" >
-      @if(isset($image_gallery) && !empty($image_gallery))
-        @foreach($image_gallery as $gallery)
-                <div class="col-lg-3 delete-ele-{{$gallery -> id}}">
-                    <img src="{{ url('uploads/'.$product -> id.'/large/' . $gallery->image) }}" class="photo_preview" />
-                    <a href="#" class="btn btn-danger remove-feature-product"  title="xóa" data-value="{{ $gallery -> id}}"><i class="fa fa-remove"></i></a>
-                </div>
-        @endforeach     
-       @endif       
+        {{-- <div class="row" >
+            @if(isset($image_gallery) && !empty($image_gallery))
+                @foreach($image_gallery as $gallery)
+                        <div class="col-lg-3 delete-ele-{{$gallery -> id}}">
+                            <img src="{{ url('uploads/'.$product -> id.'/large/' . $gallery->image) }}" class="photo_preview" />
+                            <a href="#" class="btn btn-danger remove-feature-product"  title="xóa" data-value="{{ $gallery -> id}}"><i class="fa fa-remove"></i></a>
+                        </div>
+                @endforeach     
+            @endif       
+        </div> --}}
+        <div class="row" >
+          @if(isset($image_gallery) && !empty($image_gallery))
+            @php 
+                //su dung google drive
+                $googleDriveStorage = Storage::disk('small_google_drive');
+            @endphp
+            @foreach($image_gallery as $gallery)
+                    <div class="col-lg-3 delete-ele-{{$gallery -> id}}">
+                        @php 
+                            //get hình ảnh từ google drive
+                            $fileinfo = collect($googleDriveStorage->listContents('/', false))
+                                ->where('type', 'file')
+                                ->where('name', $gallery -> image)
+                                ->first();   
+                        @endphp
+                        @if($fileinfo <> null)
+                        <img src="<?php echo $googleDriveStorage -> url($fileinfo['path']);?>" class="photo_preview" />
+                       
+                       
+                        <a href="#" class="btn btn-danger remove-feature-product"  title="xóa" data-value="{{ $gallery -> id}}"><i class="fa fa-remove"></i></a>
+                         @endif
+                    </div>
+            @endforeach     
+           @endif       
          </div>
      </div> 
 
