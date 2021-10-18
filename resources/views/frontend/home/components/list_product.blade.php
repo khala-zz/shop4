@@ -103,7 +103,12 @@
                                             <article class="list-product">
                                                 <div class="img-block">
                                                     <a href="{{ url('san-pham/'.slugify($value_office -> title,'-').'/'.$value_office -> id) }}" class="thumbnail">
-                                                        <img class="first-img" src="{{asset('uploads/products-daidien/'.$value_office -> image)}}" alt="{{$value_office -> title}}" />
+                                                        
+                                                        @if(file_exists(public_path('uploads/products-daidien/'.$value_office -> image)))
+                                                            <img class="first-img" src="{{asset('uploads/products-daidien/'.$value_office -> image)}}" alt="{{$value_office -> title}}" />
+                                                        @else
+                                                            <img class="img-responsive" src="{{asset('uploads/images/no-image.jpg')}}" alt="{{$value_office -> title}}" />
+                                                         @endif
                                                        
                                                     </a>
                                                     <div class="quick-view">
